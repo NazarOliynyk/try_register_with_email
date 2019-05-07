@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>INDEX</title>
+</head>
+<body>
+
+<h1>Try Registration with email</h1>
+
+<h3>Hello: <p th:text="${username}"></p></h3>
+
+<h3>Response on confirm Password: <p th:text="${responseOnConfirmPass}"></p></h3>
+
+<h3 class="target"></h3>
+
+<form >
+
+    <div><label> Password:
+        <input id="password" type="password" name="password" placeholder="password"/>
+    </label></div>
+
+</form>
+
+<button id="btnSaveUserFinally">Sign In</button>
+
+
+<script>
+    $('#btnSaveUserFinally').click(function () {
+        var $password = $('#password').val();
+        console.log( "PASSWORD", $password);
+        let responseTransfer = {text: $password};
+        $.ajax({
+            url:'/saveUserFinally',
+            type:'POST',
+            data:JSON.stringify(responseTransfer),
+            contentType:'application/json',
+            success: function (results) {
+                console.log(results);
+               // let $div = $("User saved");
+                $('.target').append(results);
+            },
+            error: function (err) {
+                console.log('error: '+err);
+                $('.target').append("Failed to save");
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
